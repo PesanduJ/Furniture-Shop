@@ -1,0 +1,61 @@
+create database Furniture_Shop;
+use Furniture_Shop;
+
+create table UserInfo(
+UserID int primary key identity,
+FName varchar(25) not null,
+LName varchar(25) not null,
+Age int,
+User_Address varchar(40),
+Email varchar(40),
+Contact_Number varchar(10) not null,
+User_Password varchar(40) not null,
+Username varchar(50) not null unique
+);
+
+create table Category(
+CategoryID int primary key identity,
+Username varchar(50) references UserInfo(Username),
+Categoryname varchar(25) not null unique
+);
+
+create table Supplier(
+SupplierID int primary key identity,
+Username varchar(50) references UserInfo(Username),
+Supplier_Name varchar(25) not null unique,
+Supplier_Contact_Number varchar(10),
+Supplier_Email varchar(40),
+Supplier_Address varchar(40),
+);
+
+create table Items(
+ItemID int primary key identity,
+Username varchar(50) references UserInfo(Username),
+Categoryname varchar(25) references Category(Categoryname),
+Supplier_Name varchar(25) references Supplier(Supplier_Name),
+Item_Name varchar(25) not null,
+Item_Bought_Price int not null,
+Item_Selling_Price int not null,
+Item_Discount_Price int not null,
+Item_Count int not null,
+Total_Items_Purchased int not null,
+Items_Bought_Cost int not null,
+Items_Selling_Total int not null,
+Profit_Without_Dis int not null,
+Profit_With_Dis int not null,
+Date_Of_Purchase date not null,
+CodeNo varchar(25) not null,
+ImageName varchar(50),
+Supplier_Warranty date
+);
+
+create table Items_Sold_List(
+Items_Sold_ID int primary key identity,
+ItemID int references Items(ItemID),
+Username varchar(50) references UserInfo(Username),
+Customer_Name varchar(25) not null,
+Customer_Contact_Number varchar(10),
+Date_Item_Sold datetime not null,
+Number_Of_Items_Sold int not null,
+Items_Sold_Type varchar(7) not null
+);
